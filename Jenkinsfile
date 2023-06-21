@@ -3,10 +3,6 @@ pipeline {
 
     tools { nodejs 'NodeJS' }
 
-    options {
-        ansiColor('xterm')
-    }
-
     parameters {
         string(name: 'SPEC', defaultValue:'cypress/e2e/1-getting-started/todo.cy.js', description: 'Enter the cypress script path that you want to execute')
         choice(name: 'BROWSER', choices:['electron', 'chrome', 'edge', 'firefox'], description: 'Select the browser to be used in your cypress tests')
@@ -14,34 +10,6 @@ pipeline {
     }
 
     stages {
-        stage('Build/Deploy app to staging-') {
-            steps {
-                sshPublisher(
-                    publishers: [
-                        sshPublisherDesc(
-                        configName: 'staging',
-                        transfers: [
-                            sshTransfer(
-                            cleanRemote: false,
-                            excludes: 'node_modules/,cypress/,**/*.yml,mochawesome-report/,.scannerwork/',
-                            execCommand: 'cd /var/www/html && npm install && pm2 restart npm serve.js || pm2 start npm serve.js',
-                            execTimeout: 120000,
-                            flatten: false,
-                            makeEmptyDirs: false,
-                            noDefaultExcludes: false,
-                            patternSeparator: '[, ]+',
-                            remoteDirectory: '',
-                            remoteDirectorySDF: false,
-                            removePrefix: '',
-                            sourceFiles: '**/*')],
-                        usePromotionTimestamp: false,
-                        useWorkspaceInPromotion: false,
-                        failOnError: true,
-                        continueOnError:false,
-
-                    verbose: true)])
-            } }
-
         stage('Run automated tests') {
             steps {
                 echo 'Running automated tests'
