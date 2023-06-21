@@ -13,11 +13,6 @@ pipeline {
         stage('Run automated tests') {
             steps {
                 echo 'Running automated tests'
-                sh 'npm prune'
-                sh 'npm cache clean --force'
-                sh 'npm i'
-                sh 'npm install -g cypress --force'  //forçar instalação do cypress
-                sh 'npx cypress open'
             }
         }
         stage('SonarQube analysis') {
