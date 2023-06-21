@@ -13,6 +13,11 @@ pipeline {
         stage('Run automated tests') {
             steps {
                 echo 'Running automated tests'
+                sh 'npm prune'
+                sh 'npm cache clean --force'
+                sh 'npm i'
+                sh 'npm install -g cypress --force'  //forçar instalação do cypress
+                sh 'npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator'
                 sh 'npx cypress open'
             }
         }
