@@ -46,7 +46,7 @@ pipeline {
                     }
             }
         }
-        stage('Quality Gate') {
+        stage('SonarQube analysis') {
             when { expression { params.skip_sonar != true } }
             steps {
                 timeout(time: 1, unit: 'HOURS') {
@@ -58,14 +58,9 @@ pipeline {
         }
         stage('Perform manual testing') {
             steps {
-                timeout(activity: true, time: 5) {
+                timeout(activity: true, time: 2) {
                     input 'Proceed to production?'
                 }
-            }
-        }
-        stage('Release to production') {
-            steps {
-                echo 'Releasing to production'
             }
         }
         }
