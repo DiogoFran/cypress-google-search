@@ -46,7 +46,7 @@ pipeline {
                     }
             }
         }
-        stage('SonarQube analysis') {
+        stage('JMeter Test') {
             when { expression { params.skip_sonar != true } }
             steps {
                 timeout(time: 1, unit: 'HOURS') {
